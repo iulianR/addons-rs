@@ -1,0 +1,24 @@
+[env]
+DATABASE_URL = "sqlite:addons.db"
+
+[tasks.db-reset]
+install_crate = { crate_name = "sqlx-cli", binary = "sqlx", test_arg = "--help" }
+command = "sqlx"
+args = ["db", "drop"]
+
+
+[tasks.db-create]
+command = "sqlx"
+args = ["db", "create"]
+
+[tasks.db-migrate]
+command = "sqlx"
+args = ["migrate", "run"]
+
+
+[tasks.db]
+dependencies = [
+    "db-reset",
+    "db-create",
+    "db-migrate"
+]

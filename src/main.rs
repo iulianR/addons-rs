@@ -6,8 +6,10 @@ use async_graphql::{
 use async_graphql_actix_web::{GraphQLRequest, GraphQLResponse};
 use schema::AddonsSchema;
 
-use crate::{model::Addons, schema::QueryRoot};
+use crate::{db::setup_db, schema::QueryRoot};
 
+pub mod db;
+pub mod error;
 pub mod model;
 pub mod schema;
 
@@ -23,14 +25,15 @@ async fn index_playground() -> Result<HttpResponse> {
 }
 
 #[actix_web::main]
-async fn main() -> std::io::Result<()> {
+async fn main() -> anyhow::Result<()> {
+    let db = setup_db().await?;
     let schema = Schema::build(QueryRoot, EmptyMutation, EmptySubscription)
-        .data(Addons::new())
+        .data(db)
         .finish();
 
     println!("Playground: http://localhost:8000");
 
-    HttpServer::new(move || {
+    Ok(HttpServer::new(move || {
         App::new()
             .app_data(Data::new(schema.clone()))
             .service(web::resource("/").guard(guard::Post()).to(index))
@@ -38,5 +41,5 @@ async fn main() -> std::io::Result<()> {
     })
     .bind("127.0.0.1:8000")?
     .run()
-    .await
+    .await?)
 }
