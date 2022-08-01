@@ -1,4 +1,4 @@
-query Addons {
+query GetAllAddons {
     addons {
         id,
         name

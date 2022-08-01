@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { AddonsDocument } from 'lib/graphql-operations'
+import { GetAllAddonsDocument } from 'lib/graphql-operations'
 
 const Index = () => {
-  const { data } = useQuery(AddonsDocument)
+  const { data } = useQuery(GetAllAddonsDocument)
 
   const addons = data?.addons;
 
