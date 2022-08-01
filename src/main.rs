@@ -1,3 +1,4 @@
+use actix_cors::Cors;
 use actix_web::{guard, web, web::Data, App, HttpResponse, HttpServer, Result};
 use async_graphql::{
     http::{playground_source, GraphQLPlaygroundConfig},
@@ -35,6 +36,7 @@ async fn main() -> anyhow::Result<()> {
 
     Ok(HttpServer::new(move || {
         App::new()
+            .wrap(Cors::permissive())
             .app_data(Data::new(schema.clone()))
             .service(web::resource("/").guard(guard::Post()).to(index))
             .service(web::resource("/").guard(guard::Get()).to(index_playground))
