@@ -11,7 +11,7 @@ pub enum ApiError {
 
 impl ErrorExtensions for ApiError {
     fn extend(&self) -> async_graphql::Error {
-        self.extend_with(|err, e| match err {
+        self.extend_with(|err, _e| match err {
             ApiError::NotFound | ApiError::Generic(_) => {}
         })
     }

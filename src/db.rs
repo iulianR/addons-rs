@@ -1,6 +1,6 @@
-use chrono::{NaiveDateTime, Utc};
-use serde::Serialize;
-use sqlx::{migrate::Migrator, sqlite::SqlitePool, FromRow, Sqlite};
+use chrono::{Utc};
+
+use sqlx::{sqlite::SqlitePool};
 use std::env;
 
 use crate::model::{AddonRecord, CategoryRecord, GameRecord};
@@ -69,7 +69,7 @@ pub async fn categories_for_game(
 }
 
 pub async fn insert_addon(addon: &str, pool: &SqlitePool) -> anyhow::Result<()> {
-    let now = Utc::now();
+    let _now = Utc::now();
 
     sqlx::query!(
         r#"
