@@ -1,0 +1,6 @@
+query Addons {
+    addons {
+        id,
+        name
+    }
+}

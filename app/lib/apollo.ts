@@ -5,7 +5,6 @@ import {
   InMemoryCache,
   NormalizedCacheObject,
 } from '@apollo/client'
-import resolvers from './resolvers'
 import typeDefs from './schema'
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined
@@ -22,13 +21,12 @@ function createIsomorphLink(context: ResolverContext = {}) {
 
     const schema = makeExecutableSchema({
       typeDefs,
-      resolvers,
     })
     return new SchemaLink({ schema, context })
   } else {
     const { HttpLink } = require('@apollo/client')
     return new HttpLink({
-      uri: '/api/graphql',
+      uri: 'http://127.0.0.1:8000',
       credentials: 'same-origin',
     })
   }

@@ -1,16 +1,28 @@
 const typeDefs = /* GraphQL */ `
-  type User {
+  schema {
+    query: QueryRoot
+  }
+
+  type Addon {
+    id: Int!
+    name: String!
+  }
+
+  type Category {
+    id: Int!
+    name: String!
+  }
+
+  type Game {
     id: ID!
     name: String!
-    status: String!
+    categoriesForGame: [Category!]!
   }
 
-  type Query {
-    viewer: User!
-  }
-
-  type Mutation {
-    updateName(name: String!): User!
+  type QueryRoot {
+    addons: [Addon!]!
+    games: [Game!]!
+    categories: [Category!]!
   }
 `
 
